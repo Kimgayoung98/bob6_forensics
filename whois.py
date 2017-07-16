@@ -2,6 +2,7 @@ import pythonwhois
 import json
 import sys
 import datetime
+import yaml
 
 def datetime_handler(x):
     if isinstance(x, datetime.datetime):
@@ -21,8 +22,11 @@ while True:
 	print line
 	whoiss = pythonwhois.get_whois(line)
 	print whoiss
-	with open('whois.txt', 'w')as make_file:
-		my_json = json.dumps(whoiss, default = datetime_handler, indent = 4)
-		print my_json
+	my_json = json.dumps(whoiss, default = datetime_handler, indent = 4)
+	d = yaml.load(my_json)
+
+	with open('whois.json', 'w')as make_file:
+		json.dump(d,make_file)
+		print d
 
 f.close()
